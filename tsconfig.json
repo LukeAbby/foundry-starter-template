@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": false,
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "noEmit": true,
+    "target": "ES2023",
+
+    "outDir": "typescript-build",
+    "types": [],
+
+    // See: https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax
+    "verbatimModuleSyntax": true,
+
+    // This setting keeps developers with different file name case sensitivity from running into issues.
+    // See: https://www.typescriptlang.org/tsconfig/#forceConsistentCasingInFileNames
+    "forceConsistentCasingInFileNames": true,
+
+    // Vite supports importing JSON files as modules.
+    "resolveJsonModule": true,
+
+    // Strict is _highly_ recommended. It's a whole suite of options in tsc that help you catch bugs early.
+    // If you want to disable it for some reason, you must add "strictNullChecks": true or else foundry-vtt-types may not function correctly.
+    "strict": true,
+
+    // REMOVE THIS ONCE FVTT-TYPES IS FIXED.
+    "skipLibCheck": true,
+
+    // Any implicitly shows up in many situations in TypeScript. This option makes it so that you must explicitly say `any` if you want it.
+    "noImplicitAny": true,
+
+    // This option is makes it so that the type of `x[0]` is `T | undefined` instead of `T`.
+    // If you find this annoying, disable this option
+    "noUncheckedIndexedAccess": true,
+
+    // An import like `import "foo";` won't be type checked by default.
+    // This can be convenient with some bundlers but it's not necessary with Vite and it's generally safer to have this option on.
+    "noUncheckedSideEffectImports": true,
+
+    // It's possible for errors to be thrown like `throw 1` which obviously isn't a subclass of `Error`.
+    // For the greatest safety you can check if it's an instance of `Error` with `instanceof Error` but if you'd prefer not to, you can disable this rule.
+    "useUnknownInCatchVariables": true,
+
+    "noImplicitOverride": true
+
+    // Consider enabling this if you have JS files and want TypeScript to lint them.
+    // Most starting projects will probably want to simply write in TypeScript and most existing projects will probably not have JS files that pass typechecking so this is disabled.
+    // "checkJs": true,
+
+    // Consider enabling this option if you switch another bundler that doesn't know how to bundle TypeScript multiple files at a time.
+    // "isolatedModules": true,
+
+    // Consider enabling this option if you care about the difference between `{ optionalProperty?: string }` and `{ optionalProperty: undefined }`.
+    // Sometimes in Foundry there are cases where `{ optionalProperty: undefined }` will cause issues, for example in a config where it'll override the default value.
+    // "exactOptionalPropertyTypes": true,
+  },
+
+  "references": [{ "path": "./src" }]
+}

@@ -1,0 +1,27 @@
+import type { ConfiguredDocumentClassForName } from "foundry-vtt-types/src/types/helperTypes.d.mts";
+
+type ActorType = "npc" | "character";
+
+// These classes would ordinarily be imported from another file.
+declare class MyActor<Type extends ActorType> extends Actor {
+  type: Type;
+}
+
+declare class MyItem extends Item {}
+
+// If you are writing a system then this file will be of use of you.
+// Otherwise you can delete it.
+declare global {
+  interface DocumentClassConfig {
+    // The generic when filled in should equal its constraint.
+    // e.g in `Type extends ActorType` the type `ActorType` is the constraint.
+    Actor: typeof MyActor<ActorType>;
+    // Item: typeof MyItem;
+  }
+
+  interface DataModelConfig {}
+}
+
+// Writing something like this during debugging is useful to see if configuration is working.
+// If you hover over this type you should see it equals `typeof MyActor<ActorType>`.
+type TestConfiguration = ConfiguredDocumentClassForName<"Actor">;

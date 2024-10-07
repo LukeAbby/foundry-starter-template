@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // By setting `types` this opts out of using all types in `@types`.
+    // In the starter project this is desired because the @types packages that are in the project include things like `@types/node`.
+    // `@types/node` includes includes imports for things like `path` etc. that are obviously not available at runtime.
+    // The only types available at runtime are the ones in foundry-vtt-types.
+    // However if you were to add something like `jquery` you now have to make sure to add it to `types` here as well as `@types/jquery` won't automatically be included.
+    "types": ["fvtt-types"],
+
+    // I personally believe this is dumb but it is by design that being a composite member of a project requires `noEmit` to be false.
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "typescript-build",
+
+    "composite": true
+  }
+}
