@@ -15,10 +15,15 @@ const packageType: PackageType = "module";
 const packageID: string = "foo";
 
 const filesToCopy = [
-  `${packageID}.json`,
+  `${packageType}.json`,
   "CHANGELOG.md",
   "README.md",
   "CONTRIBUTING.md",
+  // "styles/!(*.scss|*.less)",
+  // "styles/**/!(*.scss|*.less)",
+  // "lang/*.json",
+  // "templates/*.(hbs|html)",
+  // "templates/**/*.(hbs|html)"
 ]; // Feel free to change me.
 
 // @ts-expect-error the types are set to invalid values to ensure the user sets them.
@@ -28,7 +33,7 @@ if (packageType == "REPLACE ME" || packageID == "REPLACE ME") {
     `Must set the "packageType" and the "packageID" variables in vite.config.ts`,
   );
 }
-
+const devServerPort = 30001;
 const foundryHost = await findFoundryHost();
 
 await symlinkFoundryPackage(packageType, packageID);
@@ -49,7 +54,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
     plugins.push(
       minifyPlugin(),
       ...viteStaticCopy({
-        targets: filesToCopy.map((file) => ({ src: file, dest: "." })),
+        targets: filesToCopy.map((file) => ({ src: file, dest: path.dirname(file) })),
       }),
     );
   } else {
@@ -77,7 +82,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
       entries: [],
     },
     server: {
-      port: 30001,
+      port: devServerPort,
       open: "/game",
       proxy: {
         [`^(?!${escapeRegExp(foundryPackagePath)})`]: `http://${foundryHost}`,
@@ -349,7 +354,7 @@ function foundryHMRPlugin(): Vite.Plugin {
         context.server.ws.send({
           type: "custom",
           event: "lang-update",
-          data: { path: `systems/pf2e/${basePath}` },
+          data: { path: getFoundryPackagePath(packageType, packageID) + basePath },
         });
 
         return;
@@ -364,7 +369,7 @@ function foundryHMRPlugin(): Vite.Plugin {
         context.server.ws.send({
           type: "custom",
           event: "template-update",
-          data: { path: `systems/pf2e/${basePath}` },
+          data: { path: getFoundryPackagePath(packageType, packageID) + basePath },
         });
 
         return;
