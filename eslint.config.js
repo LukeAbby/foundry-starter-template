@@ -1,22 +1,18 @@
 // @ts-check
-import eslintJS from "@eslint/js";
+import js from "@eslint/js";
 import ts from "typescript-eslint";
 import prettierEslint from "eslint-config-prettier";
 import tsdoc from "eslint-plugin-tsdoc";
-
-/**
- * @type {import("./eslint-plugin-import")}
- */
-import * as importPlugin from "eslint-plugin-import";
+import * as importPlugin from "eslint-plugin-import-x";
 import { includeIgnoreFile } from "@eslint/compat";
 
-import path from "path";
+import * as path from "path";
 
 export default ts.config(
-  eslintJS.configs.recommended,
+  js.configs.recommended,
   ...ts.configs.strictTypeChecked,
   prettierEslint,
-  importPlugin.flatConfigs?.recommended,
+  importPlugin.flatConfigs.recommended,
 
   // Automatically includes the .gitignore file in ESLint's ignore list.
   // I find this the most intuitive behavior.
@@ -32,6 +28,9 @@ export default ts.config(
     ignores: [".yarn"],
     plugins: {
       tsdoc,
+    },
+    settings: {
+      "import-x/resolver": "typescript",
     },
     rules: {
       // Avoiding `any` is good practice in TypeScript
@@ -62,6 +61,12 @@ export default ts.config(
       "@typescript-eslint/no-namespace": ["error", { allowDeclarations: true }],
 
       "tsdoc/syntax": "warn",
+    },
+  },
+  {
+    files: ["**/*.js"],
+    rules: {
+      "tsdoc/syntax": "off",
     },
   },
 );

@@ -11,7 +11,7 @@
     // I personally believe this is dumb but it is by design that being a composite member of a project requires `noEmit` to be false.
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "outDir": "typescript-build",
+    "outDir": ".typescript-build",
 
     "composite": true
   }

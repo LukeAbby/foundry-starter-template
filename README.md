@@ -20,7 +20,7 @@ This opinionated starter project comes pre-configured with the following:
    2. Open the Command Palette, by default Ctrl+Shift+P will open it. Make sure not to delete the `>` character.
    3. Search for "TypeScript Use Workspace Version" in VSCode.
    4. Select "Use the Workspace's Version". If for some weird reason there are multiple, select the entry starting with `.yarn/sdks`.
-5. Make sure Foundry is running on `localhost:3000`.  
+5. Make sure Foundry is running on `localhost:30000`.  
    If you want to run Foundry somewhere else, set the `FOUNDRY_HOST_NAME` variable and the `FOUNDRY_PORT` variable if needed.  
    Note: This project should automatically handle developers using Windows Subsystem for Linux (WSL) with Foundry running on Windows.
 6. Edit the `vite.config.ts` file. Set `packageType` to your package type ("module" or "system") and `packageName` to your package's name. The `packageName` must match the name in your `module.json` file.
@@ -78,7 +78,23 @@ Note: [Compendium Packs](https://foundryvtt.com/article/compendium/) enable you 
 With modules there's generally very few static files so I would recommend putting your `module.json` at the root of the repository, i.e. not inside any folders in this project. If you want to put it somewhere else, for example at `src/module.json` then you should edit the `filesToCopy` array in the `vite.config.ts`. Here's an minimal `module.json` that will work with this project:
 
 ```json
-{}
+{
+  "id": "my-module",
+  "title": "My Module",
+  "description": "My amazing system.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "Me"
+    }
+  ],
+  "esmodules": ["index.js"],
+  "styles": ["styles.css"]
+}
 ```
 
 You can read up about the module manifest [here](https://foundryvtt.com/article/module-development/#manifest). The rest of the guide there should be helpful too!

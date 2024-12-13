@@ -15,4 +15,7 @@
 node_modules
 vite.config.ts.timestamp-*-*.mjs
 dist
-typescript-build
+
+# In build mode the TypeScript compiler forces sub-project state to be emitted.
+# This is in the gitignore because they're never useful files and ideally would be hidden.
+.typescript-build

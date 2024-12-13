@@ -2,15 +2,25 @@
   "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false,
     "module": "Node16",
     "moduleResolution": "Node16",
     "noEmit": true,
-    "target": "ES2023",
+    "outDir": ".typescript-build",
 
-    "outDir": "typescript-build",
+    // Vite does interop with ESM and CommonJS modules so this option matches the runtime.
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": false,
+
+    // Disables including `@types` packages because:
+    // 1. Many dependencies have sub-dependencies on `@types` packages that won't actually exist at runtime.
+    // 2. fvtt-types handles all the types that really are available at runtime.
+    // 3. It's a performance hit to include all types.
+    // Adding your own types explicitly is recommended.
     "types": [],
+
+    // Foundry is on the bleeding edge of JavaScript so always having the newest version available is nice.
+    // If you want to target an older version of JavaScript anyways, first consider setting Vite to transpile to that version.
+    "target": "ESNext",
 
     // See: https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax
     "verbatimModuleSyntax": true,
@@ -44,18 +54,37 @@
     // For the greatest safety you can check if it's an instance of `Error` with `instanceof Error` but if you'd prefer not to, you can disable this rule.
     "useUnknownInCatchVariables": true,
 
-    "noImplicitOverride": true
+    // Types like `Record<string, T>` are very unsafe.
+    // 1. They allow typos like `x.naem` when you really meant `x.name`.
+    // 2. They don't force you to handle `undefined` (notably this is fixed by `noUncheckedIndexedAccess`).
+    // 3. Mutation on them inherently is unsafe. For example, this is allowed but will cause a runtime error:
+    // ```
+    // let withNumber: { x: number } = { x: 1 };
+    // let withIndexSignature: Record<string, unknown> = withNumber;
+    // withIndexSignature.x = ["foo"];
+    //
+    // console.log(withNumber.x * 5); // This will throw a runtime error.
+    // ```
+    "noPropertyAccessFromIndexSignature": true,
+
+    "noImplicitOverride": true,
+
+    "allowJs": true
 
     // Consider enabling this if you have JS files and want TypeScript to lint them.
     // Most starting projects will probably want to simply write in TypeScript and most existing projects will probably not have JS files that pass typechecking so this is disabled.
+    // If you have individual files you want to be type checked add a comment at the start of the file `// @ts-check`.
     // "checkJs": true,
+
+    // This option not enabled by default because it can be very annoying.
+    // Consider enabling this option if you want to catch bugs arising from stuff like `{ optionalProperty: undefined }`.
+    // This can occur in Foundry from cases like in a configuration object where it'll override the default value.
+    // However opting-in to allowing `{ optionalProperty: undefined }` means you must write `{ optionalProperty?: T | undefined }` instead of `{ optionalProperty?: T }` for the type.
+    // This can be annoying because for developers.
+    // "exactOptionalPropertyTypes": true,
 
     // Consider enabling this option if you switch another bundler that doesn't know how to bundle TypeScript multiple files at a time.
     // "isolatedModules": true,
-
-    // Consider enabling this option if you care about the difference between `{ optionalProperty?: string }` and `{ optionalProperty: undefined }`.
-    // Sometimes in Foundry there are cases where `{ optionalProperty: undefined }` will cause issues, for example in a config where it'll override the default value.
-    // "exactOptionalPropertyTypes": true,
   },
 
   "references": [{ "path": "./src" }]
