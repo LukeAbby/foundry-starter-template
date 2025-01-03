@@ -1,4 +1,10 @@
-import type { ConfiguredDocumentClassForName } from "fvtt-types/src/types/helperTypes.d.mts";
+// The `export {}` is necessary because the file does not contain any top-level import/export statements.
+// `import Document = ...` does not count.
+//
+// Once you add an import or export statement, you can remove the `export {}`.
+export {};
+
+import Document = foundry.abstract.Document;
 
 // If you are writing a system then this file will be of use of you.
 // Otherwise you can delete it.
@@ -18,4 +24,4 @@ declare global {
   interface DataModelConfig {}
 }
 
-type TestConfiguration = ConfiguredDocumentClassForName<"Actor">;
+type TestConfiguration = Document.ConfiguredClassForName<"Actor">;

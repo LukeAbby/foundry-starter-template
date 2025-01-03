@@ -1,4 +1,4 @@
-import type { ConfiguredDocumentClassForName } from "foundry-vtt-types/src/types/helperTypes.d.mts";
+import Document = foundry.abstract.Document;
 
 type ActorType = "npc" | "character";
 
@@ -24,4 +24,4 @@ declare global {
 
 // Writing something like this during debugging is useful to see if configuration is working.
 // If you hover over this type you should see it equals `typeof MyActor<ActorType>`.
-type TestConfiguration = ConfiguredDocumentClassForName<"Actor">;
+type TestConfiguration = Document.ConfiguredClassForName<"Actor">;

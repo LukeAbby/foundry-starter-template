@@ -13,6 +13,10 @@
     "emitDeclarationOnly": true,
     "outDir": ".typescript-build",
 
+    "declarationMap": true,
     "composite": true
-  }
+  },
+
+  // Undo the `exclude` from the root tsconfig.json.
+  "exclude": []
 }
