@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     // By setting `types` this opts out of using all types in `@types`.
     // In the starter project this is desired because the @types packages that are in the project include things like `@types/node`.
