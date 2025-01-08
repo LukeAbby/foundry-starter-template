@@ -2,6 +2,7 @@ import * as fs from "fs/promises";
 import * as Vite from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { checker } from "vite-plugin-checker";
 import esbuild from "esbuild";
 import * as path from "path";
 import { findFoundryHost, findManifestJSON } from "./utils.ts";
@@ -45,7 +46,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
   const outDir = "dist";
 
   const plugins: Vite.PluginOption[] = [
-    // checker({ typescript: { buildMode: true } }),
+    checker({ typescript: { buildMode: true } }),
     tsconfigPaths(),
     foundryEntrypointsPlugin(),
   ];
