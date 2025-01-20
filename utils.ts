@@ -89,7 +89,7 @@ export async function findFoundryHost(): Promise<HostData> {
     }
 
     throw new Error(
-      `Could not ping localhost:30000 (WSL) or ${hostname}.local (Windows)
+      `Could not ping localhost:${foundryHost} (WSL) or ${hostname}.local (Windows)
   ${foundryNotRuning}
   WSL Error - ${formatError(pingResult.error)}
   Windows Error - ${formatError(wslToWindowsPingResult.error)}`,
@@ -97,7 +97,7 @@ export async function findFoundryHost(): Promise<HostData> {
   }
 
   throw new Error(
-    `Could not ping localhost:30000
+    `Could not ping localhost:${foundryHost}
   ${foundryNotRuning}
   Error: ${pingResult.error.message}`,
   );
