@@ -3,5 +3,12 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
+
+  // Only validate through Stylelint
+  "css.validate": false,
+  "scss.validate": false,
+  "stylelint.enable": true,
+  "stylelint.validate": ["css", "scss"],
+
   "typescript.enablePromptUseWorkspaceTsdk": true
 }
