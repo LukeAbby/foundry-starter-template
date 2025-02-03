@@ -12,5 +12,9 @@ Hooks.on("ready", () => {
   // Try changing the `import` above to `const` and see what happens.
   const exampleActor: DataModel.Any = new Actor({ name: "Example Actor" });
 
+  if (!(exampleActor instanceof DataModel)) {
+    throw new Error("Actor must be an instance of DataModel!");
+  }
+
   console.log(exampleActor);
 });

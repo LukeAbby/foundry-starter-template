@@ -50,14 +50,14 @@
 
     // Types like `Record<string, T>` are very unsafe.
     // 1. They allow typos like `x.naem` when you really meant `x.name`.
-    // 2. They don't force you to handle `undefined` (notably this is fixed by `noUncheckedIndexedAccess`).
+    // 2. Out of the box they don't force you to handle `undefined` (notably this is fixed by `noUncheckedIndexedAccess`).
     // 3. Mutation on them inherently is unsafe. For example, this is allowed but will cause a runtime error:
     // ```
-    // let withNumber: { x: number } = { x: 1 };
+    // let withNumber: { prop: number } = { prop: 1 };
     // let withIndexSignature: Record<string, unknown> = withNumber;
-    // withIndexSignature.x = ["foo"];
+    // withIndexSignature.prop = ["foo"];
     //
-    // console.log(withNumber.x * 5); // This will throw a runtime error.
+    // console.log(withNumber.prop * 5); // This will throw a runtime error because `prop` has been set to `["foo"]` and is no longer a number.
     // ```
     "noPropertyAccessFromIndexSignature": true,
 

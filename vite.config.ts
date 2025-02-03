@@ -14,6 +14,13 @@ const packageType: PackageType = "module";
 // The package name should be the same as the name in the `module.json`/`system.json` file.
 const packageID: string = "abc";
 
+// @ts-expect-error the types are set to invalid values to ensure the user sets them.
+if (packageType == "REPLACE ME" || packageID == "REPLACE ME") {
+  throw new Error(
+    `Must set the "packageType" and the "packageID" variables in vite.config.ts`,
+  );
+}
+
 const manifestJSONPath = await findManifestJSON(packageType);
 
 const filesToCopy = [
@@ -27,13 +34,6 @@ const devServerPort = 30001;
 const scriptsEntrypoint = "./src/module/index.ts";
 const stylesEntrypoint = "./src/styles/styles.scss";
 
-// @ts-expect-error the types are set to invalid values to ensure the user sets them.
-if (packageType == "REPLACE ME" || packageID == "REPLACE ME") {
-  throw new Error(
-    `Must set the "packageType" and the "packageID" variables in vite.config.ts`,
-  );
-}
-
 const foundryHostData = await findFoundryHost();
 const foundryHost = foundryHostData.host;
 
@@ -46,7 +46,16 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
   const outDir = "dist";
 
   const plugins: Vite.PluginOption[] = [
-    checker({ typescript: { buildMode: true } }),
+    checker({
+      typescript: { buildMode: true },
+      eslint: {
+        lintCommand: "eslint .",
+        useFlatConfig: true,
+      },
+      stylelint: {
+        lintCommand: "stylelint **/*.{scss,css}",
+      },
+    }),
     tsconfigPaths(),
     foundryEntrypointsPlugin(),
   ];
@@ -107,12 +116,8 @@ function foundryEntrypointsPlugin(): Vite.Plugin {
   const jsFile = `${manifestPrefix}index.js`;
   const stylesFile = `${manifestPrefix}styles.css?url`;
 
-  let config: Vite.ResolvedConfig;
   return {
     name: "manifest",
-    configResolved(resolvedConfig) {
-      config = resolvedConfig;
-    },
     resolveId(source, _importer, options) {
       if (options.isEntry) {
         return jsFile;
@@ -135,23 +140,14 @@ function foundryEntrypointsPlugin(): Vite.Plugin {
           );
         }
 
-        let imports = `import ${JSON.stringify(scriptsModule.id)};`;
-
-        // During building there isn't a reference to the css file so it must be imported in the
-        // entrypoint manually.
-        if (config.command === "build") {
-          const stylesModule = await this.resolve(stylesEntrypoint);
-          if (!stylesModule) {
-            throw new Error(
-              `Could not resolve entrypoint: ${JSON.stringify(stylesEntrypoint)}`,
-            );
-          }
-
-          const stylesID = stylesModule.id;
-          imports += `\nimport ${JSON.stringify(stylesID)}`;
+        const stylesModule = await this.resolve(stylesEntrypoint);
+        if (!stylesModule) {
+          throw new Error(
+            `Could not resolve entrypoint: ${JSON.stringify(stylesEntrypoint)}`,
+          );
         }
 
-        return imports;
+        return `import ${JSON.stringify(scriptsModule.id)};\nimport ${JSON.stringify(stylesModule.id)}`;
       }
 
       if (id === stylesFile) {

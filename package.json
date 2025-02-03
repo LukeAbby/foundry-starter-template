@@ -41,11 +41,7 @@
     "vite-plugin-static-copy": "^2.2.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
-  "overrides": {
-    "@types/earcut": "github:LukeAbby/earcut-types#main"
-  },
   "resolutions": {
-    "vite-plugin-checker/ansi-escapes": "^7.0.0",
-    "@types/earcut": "github:LukeAbby/earcut-types#main"
+    "meow": "^9.0.0"
   }
 }
