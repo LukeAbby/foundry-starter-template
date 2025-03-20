@@ -84,7 +84,7 @@
     // Consider enabling this option if you want to catch bugs arising from stuff like `{ optionalProperty: undefined }`.
     // This can occur in Foundry from cases like in a configuration object where it'll override the default value.
     // However opting-in to allowing `{ optionalProperty: undefined }` means you must write `{ optionalProperty?: T | undefined }` instead of `{ optionalProperty?: T }` for the type.
-    // This can be annoying because for developers.
+    // This can be a nuisance because many libraries don't properly add `| undefined` and even fvtt-types is not completely correct here.
     // "exactOptionalPropertyTypes": true,
 
     // Consider enabling this option if you switch another bundler that doesn't know how to bundle TypeScript multiple files at a time.
