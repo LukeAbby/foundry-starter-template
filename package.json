@@ -42,6 +42,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "resolutions": {
-    "meow": "^9.0.0"
+    "meow": "^9.0.0",
+    "@types/earcut": "^3.0.0"
   }
 }
