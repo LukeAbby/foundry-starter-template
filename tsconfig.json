@@ -51,14 +51,7 @@
     // Types like `Record<string, T>` are very unsafe.
     // 1. They allow typos like `x.naem` when you really meant `x.name`.
     // 2. Out of the box they don't force you to handle `undefined` (notably this is fixed by `noUncheckedIndexedAccess`).
-    // 3. Mutation on them inherently is unsafe. For example, this is allowed but will cause a runtime error:
-    // ```
-    // let withNumber: { prop: number } = { prop: 1 };
-    // let withIndexSignature: Record<string, unknown> = withNumber;
-    // withIndexSignature.prop = ["foo"];
-    //
-    // console.log(withNumber.prop * 5); // This will throw a runtime error because `prop` has been set to `["foo"]` and is no longer a number.
-    // ```
+    // 3. 
     "noPropertyAccessFromIndexSignature": true,
 
     "noImplicitOverride": true,
@@ -73,7 +66,15 @@
     // This means that even `.d.ts` files in your own repo aren't type checked which can be an issue for some repositories. Secondly `skipLibCheck` silences some of
     // the most interesting errors; those which occur within fvtt-types files. When this happens it's a strong indication that the durability of fvtt-types isn't high
     // enough to your configuration in this area and it's best to be reported.
-    "skipLibCheck": false
+    "skipLibCheck": false,
+
+    // The editor always runs an incremental build but if you run tsc directly you might want to take advantage of the performance boost from incremental builds.
+    // This is essentially a free performance boost if you run tsc from the command line a lot.
+    //
+    // Note that occassionally an incremental build might cause "ghost errors." That is an error that only occurs due to recompilation occuring in a different order than
+    // the original compilation. Given that the ordering of compilation is not guaranteed anywhere this is only uncovering already existing, legitimate, issues but this can
+    // still be rather frustrating as tracking them down can be difficult.
+    "incremental": true
 
     // Consider enabling this if you have JS files and want TypeScript to lint them.
     // Most starting projects will probably want to simply write in TypeScript and most existing projects will probably not have JS files that pass typechecking so this is disabled.
