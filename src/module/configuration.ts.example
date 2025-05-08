@@ -11,12 +11,13 @@ declare class MyItem extends Item {}
 
 // If you are writing a system then this file will be of use of you.
 // Otherwise you can delete it.
-declare global {
+declare module "fvtt-types/configuration" {
   interface DocumentClassConfig {
-    // The generic when filled in should equal its constraint.
-    // e.g in `Type extends ActorType` the type `ActorType` is the constraint.
-    Actor: typeof MyActor<ActorType>;
-    // Item: typeof MyItem;
+    // You should fill in all of the classes's generic parameters.
+    // This can help avoid some especially difficult to avoid circularities.
+    // e.g in `SubType extends Actor.SubType` the type `Actor.SubType` is the constraint.
+    Actor: typeof MyActor<Item.SubType>;
+    Item: typeof MyItem<Item.SubType>;
   }
 
   interface DataModelConfig {}
@@ -24,4 +25,4 @@ declare global {
 
 // Writing something like this during debugging is useful to see if configuration is working.
 // If you hover over this type you should see it equals `typeof MyActor<ActorType>`.
-type TestConfiguration = Document.ConfiguredClassForName<"Actor">;
+type TestConfiguration = Actor.Implementation;

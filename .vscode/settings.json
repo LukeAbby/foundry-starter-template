@@ -10,5 +10,6 @@
   "stylelint.enable": true,
   "stylelint.validate": ["css", "scss"],
 
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
