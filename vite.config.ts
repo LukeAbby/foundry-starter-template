@@ -23,12 +23,7 @@ if (packageType == "REPLACE ME" || packageID == "REPLACE ME") {
 
 const manifestJSONPath = await findManifestJSON(packageType);
 
-const filesToCopy = [
-  manifestJSONPath,
-  "CHANGELOG.md",
-  "README.md",
-  "CONTRIBUTING.md",
-]; // Feel free to change me.
+const filesToCopy = ["CHANGELOG.md", "README.md", "CONTRIBUTING.md"]; // Feel free to change me.
 
 const devServerPort = 30001;
 const scriptsEntrypoint = "./src/module/index.ts";
@@ -72,6 +67,15 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
           dest: path.dirname(file),
         })),
         silent: true,
+      }),
+      // The manifest must be copied to the top level of the `dist` folder.
+      viteStaticCopy({
+        targets: [
+          {
+            src: manifestJSONPath,
+            dest: ".",
+          },
+        ],
       }),
     );
   } else {
