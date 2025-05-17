@@ -23,7 +23,7 @@ This opinionated starter project comes pre-configured with the following:
 5. Make sure Foundry is running on `localhost:30000`.  
    If you want to run Foundry somewhere else, set the `FOUNDRY_HOST_NAME` variable and the `FOUNDRY_PORT` variable if needed.  
    Note: This project should automatically handle developers using Windows Subsystem for Linux (WSL) with Foundry running on Windows.
-6. Edit the `vite.config.ts` file. Set `packageType` to your package type ("module" or "system") and `packageName` to your package's name. The `packageName` must match the name in your `module.json` file.
+6. Edit the `vite.config.ts` file. Set `packageType` to your package type ("module" or "system") and `packageID` to your package's id. The `packageID` must match the id in your `module.json` file.
 7. Go through the steps in [Setting up your package Manifest](#setting-up-your-package-manifest)
 8. Start development with `yarn run dev`.
 9. Visit `localhost:3001` to see your project during development. You'll get automatic hot reload whenever you save your files.
