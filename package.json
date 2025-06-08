@@ -24,7 +24,7 @@
     "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import-x": "^4.5.0",
     "eslint-plugin-tsdoc": "^0.4.0",
-    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#documents-v2",
+    "fvtt-types": "github:League-of-Foundry-Developers/foundry-vtt-types#main",
     "npm-run-all2": "^8.0.2",
     "prettier": "^3.4.2",
     "run-s": "^0.0.0",
@@ -43,7 +43,6 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "resolutions": {
-    "meow": "^9.0.0",
-    "@types/earcut": "^3.0.0"
+    "meow": "^9.0.0"
   }
 }
