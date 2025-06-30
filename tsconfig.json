@@ -89,10 +89,5 @@
 
     // Consider enabling this option if you switch another bundler that doesn't know how to bundle TypeScript multiple files at a time.
     // "isolatedModules": true,
-  },
-
-  // Exclude the src directory from the root project to avoid double type checking and causing an error due to mismatched `compilerOptions.types`.
-  "exclude": ["src/**"],
-
-  "references": [{ "path": "./src/module" }]
+  }
 }
