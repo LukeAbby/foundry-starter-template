@@ -89,5 +89,6 @@
 
     // Consider enabling this option if you switch another bundler that doesn't know how to bundle TypeScript multiple files at a time.
     // "isolatedModules": true,
-  }
+  },
+  "exclude": ["dist"]
 }
