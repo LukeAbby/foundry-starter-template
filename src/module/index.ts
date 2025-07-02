@@ -10,7 +10,10 @@ import DataModel = foundry.abstract.DataModel;
 Hooks.on("ready", () => {
   // This is an example of why using the `import =` syntax is helpful.
   // Try changing the `import` above to `const` and see what happens.
-  const exampleActor: DataModel.Any = new Actor({ name: "Example Actor" });
+  const exampleActor: DataModel.Any = new Actor({
+    type: "base",
+    name: "Example Actor",
+  });
 
   if (!(exampleActor instanceof DataModel)) {
     throw new Error("Actor must be an instance of DataModel!");
