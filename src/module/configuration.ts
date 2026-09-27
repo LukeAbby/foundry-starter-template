@@ -14,8 +14,7 @@ declare module "fvtt-types/configuration" {
   // Tip 2: If you want to make sure it's working, try writing `type TestConfiguration = Actor.Implementation;`
   //        replacing `"Actor"` with the document type you're working with.
   //        If hovering `TestConfiguration` says `typeof MyActor`, congratulations! It's working.
-  // Tip 2: If `MyActor` has generic parameters (with OR without defaults), you need to provide them here.
-  //        For example `typeof Actor<Actor.SubType>`. Make sure that the generic parameters are as wide as possible.
+  // Tip 3: If `MyActor` has required generic parameters, you need to provide them here.
   interface DocumentClassConfig {}
 
   // foundry-vtt-types needs to know what data models you register with Foundry at runtime.
